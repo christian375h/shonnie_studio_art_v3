@@ -1,14 +1,18 @@
-import Image from "next/image";
+// src/pages/index.tsx
+// This is your new home page, converted from index.html.
+// It uses the Layout component and Tailwind CSS for styling.
+
+import { Layout } from "../components/Header";
+import Image from "next/image"; // Using Next.js Image component for optimization
 import Link from "next/link";
 
-// Placeholder image URLs. Assumes your assets are in the `public/assets` folder.
+// Placeholder image URLs. Replace with your actual static assets in the `public` folder.
 const pencilDrawingUrl = "/assets/pencil-drawing.jpg";
 const shonnieProfileUrl = "/assets/shonnie-profile.jpg";
 
 const HomePage = () => {
   return (
-    // Note: The <Header> wrapper is gone. This is now rendered inside the layout.
-    <>
+    <Layout>
       {/* Introduction Section */}
       <section className="border-b border-pink-100 bg-pink-50 py-16 text-center md:py-24">
         <div className="container mx-auto px-4">
@@ -42,11 +46,10 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="text-lg leading-relaxed text-gray-700">
-              <Link
-                href="/events"
-                className="font-semibold text-pink-600 hover:underline"
-              >
-                Schedule Today
+              <Link href="/events">
+                <a className="font-semibold text-pink-600 hover:underline">
+                  Schedule Today
+                </a>
               </Link>{" "}
               for your event, party or special occasion, sign up for paint
               night, face painting or glitter tattoos and decorative body art.
@@ -58,10 +61,11 @@ const HomePage = () => {
               <div className="overflow-hidden rounded-lg shadow-2xl">
                 <Image
                   src={pencilDrawingUrl}
-                  alt="A detailed pencil drawing of an eye"
+                  alt="pencil drawing"
                   width={600}
                   height={750}
-                  className="h-auto w-full"
+                  layout="responsive"
+                  objectFit="cover"
                 />
               </div>
             </div>
@@ -128,14 +132,14 @@ const HomePage = () => {
                   alt="your instructor Shonnie"
                   width={256}
                   height={256}
-                  className="h-full w-full object-cover"
+                  objectFit="cover"
                 />
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 };
 
