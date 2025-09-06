@@ -1,15 +1,13 @@
-// src/pages/contact.tsx
-// Here is the conversion of your contact.html page.
-// I've used a standard form layout with Tailwind CSS.
-// For the form submission, you would typically use a library like React Hook Form and an API route in your T3 app.
+// src/app/(site)/contact/page.tsx
 
-import { Layout } from "../components/Layout";
 import Image from "next/image";
 import { Facebook, Instagram } from "lucide-react";
 
 const ContactPage = () => {
+  // The <Layout> wrapper has been removed.
+  // The root layout in src/app/layout.tsx now handles the Header automatically.
   return (
-    <Layout>
+    <>
       {/* Introduction Section */}
       <section className="border-b border-pink-100 bg-pink-50 py-16 text-center md:py-20">
         <div className="container mx-auto px-4">
@@ -38,6 +36,7 @@ const ContactPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:text-blue-800"
+                    aria-label="Facebook"
                   >
                     <Facebook />
                   </a>
@@ -47,6 +46,7 @@ const ContactPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-pink-600 hover:text-pink-800"
+                    aria-label="Instagram"
                   >
                     <Instagram />
                   </a>
@@ -57,16 +57,16 @@ const ContactPage = () => {
                   <Image
                     src="/assets/facebook-qr.png"
                     alt="Facebook QR code"
-                    layout="fill"
-                    objectFit="contain"
+                    fill={true}
+                    className="object-contain"
                   />
                 </div>
                 <div className="relative h-40 w-40">
                   <Image
                     src="/assets/ig-shonniesart-qr.png"
                     alt="Instagram QR code"
-                    layout="fill"
-                    objectFit="contain"
+                    fill={true}
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -77,8 +77,8 @@ const ContactPage = () => {
               <h2 className="mb-6 text-2xl font-bold text-gray-800">
                 Email the Instructor
               </h2>
-              {/* The action="/form" would be replaced with an onSubmit handler that calls a tRPC mutation */}
-              <form method="POST" action="/api/form" className="space-y-6">
+              {/* This form can be updated to use a Server Action for modern handling */}
+              <form className="space-y-6">
                 <div className="flex flex-col gap-6 md:flex-row">
                   <div className="flex-1">
                     <label htmlFor="name" className="sr-only">
@@ -130,6 +130,7 @@ const ContactPage = () => {
                     maxLength={500}
                     placeholder="Message"
                     rows={6}
+                    required
                     className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-pink-500 focus:ring-pink-500"
                   ></textarea>
                 </div>
@@ -146,7 +147,7 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

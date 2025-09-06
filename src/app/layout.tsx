@@ -1,4 +1,5 @@
 import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import "../styles/globals.css"; // Make sure you have a global CSS file for fonts, etc.
 import { Merriweather, Poppins } from "next/font/google";
 
@@ -29,7 +30,8 @@ export default function RootLayout({
     <html lang="en" className={`${merriweather.variable} ${poppins.variable}`}>
       <body>
         <Header />
-        <main>{children}</main>{" "}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
