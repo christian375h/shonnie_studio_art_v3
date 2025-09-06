@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatedSection } from "./components/AnimatedSection";
 
 // Placeholder image URLs. Assumes your assets are in the `public/assets` folder.
 const pencilDrawingUrl = "/assets/pencil-drawing.jpg";
@@ -11,30 +12,32 @@ const HomePage = () => {
     <>
       {/* Introduction Section */}
       <section className="border-b border-pink-100 bg-pink-50 py-16 text-center md:py-24">
-        <div className="container mx-auto px-4">
-          <h1 className="font-merriweather mb-4 text-4xl font-bold text-gray-800 md:text-6xl">
-            SHONNIE'S STUDIO OF ART
-          </h1>
-          <p className="font-poppins text-xl text-pink-600 md:text-2xl">
-            Traveling Artist
-          </p>
+        <AnimatedSection>
+          <div className="container mx-auto px-4">
+            <h1 className="font-merriweather mb-4 text-4xl font-bold text-gray-800 md:text-6xl">
+              SHONNIE'S STUDIO OF ART
+            </h1>
+            <p className="font-poppins text-xl text-pink-600 md:text-2xl">
+              Traveling Artist
+            </p>
 
-          <div className="mx-auto mt-12 max-w-2xl rounded-lg bg-white p-8 shadow-lg">
-            <h2 className="font-poppins mb-4 text-3xl font-bold text-gray-800">
-              Your first class is FREE on me!
-            </h2>
-            <div>
-              <p className="mb-2 text-lg font-semibold text-gray-700">
-                Utah Locations
-              </p>
-              <ul className="flex justify-center space-x-6 text-gray-600">
-                <li>Bountiful</li>
-                <li>Millcreek</li>
-                <li>Virtual</li>
-              </ul>
+            <div className="mx-auto mt-12 max-w-2xl rounded-lg bg-white p-8 shadow-lg">
+              <h2 className="font-poppins mb-4 text-3xl font-bold text-gray-800">
+                Your first class is FREE on me!
+              </h2>
+              <div>
+                <p className="mb-2 text-lg font-semibold text-gray-700">
+                  Utah Locations
+                </p>
+                <ul className="flex justify-center space-x-6 text-gray-600">
+                  <li>Bountiful</li>
+                  <li>Millcreek</li>
+                  <li>Virtual</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
 
       {/* About Section */}

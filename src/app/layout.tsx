@@ -28,9 +28,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${merriweather.variable} ${poppins.variable}`}>
-      <body>
+      <body className="flex min-h-screen flex-col">
         <Header />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>
