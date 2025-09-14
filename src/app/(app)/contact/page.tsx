@@ -1,150 +1,167 @@
-// src/app/(site)/contact/page.tsx
+"use client";
 
+import { useEffect, useActionState } from "react"; // Changed this line
+import { useFormStatus } from "react-dom"; // Changed this line
 import Image from "next/image";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Toaster, toast } from "react-hot-toast";
+
+import { sendEmail, type FormState } from "src/app/actions/sendEmail";
+import { Button } from "src/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "src/components/ui/card";
+import { Input } from "src/components/ui/input";
+import { Label } from "src/components/ui/label";
+import { Textarea } from "src/components/ui/textarea";
+
+// A dedicated component for the submit button to manage loading state
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="w-full" disabled={pending}>
+      {pending ? "Sending..." : "Submit"}
+    </Button>
+  );
+}
 
 const ContactPage = () => {
-  // The <Layout> wrapper has been removed.
-  // The root layout in src/app/layout.tsx now handles the Header automatically.
+  const initialState: FormState = { message: "" };
+  const [state, formAction] = useActionState(sendEmail, initialState); // Changed this line
+
+  // Effect to show toast notifications based on the server action's response
+  useEffect(() => {
+    if (state.message) {
+      if (state.error) {
+        toast.error(state.message);
+      } else {
+        toast.success(state.message);
+        // Reset the form on successful submission
+        (document.getElementById("contact-form") as HTMLFormElement)?.reset();
+      }
+    }
+  }, [state]);
+
   return (
     <>
-      {/* Introduction Section */}
+      {/* This component will render the toast notifications */}
+      <Toaster position="bottom-center" />
+
       <section className="border-b border-pink-100 bg-pink-50 py-16 text-center md:py-20">
         <div className="container mx-auto px-4">
-          <h1 className="font-merriweather text-4xl font-bold text-gray-800 md:text-6xl">
-            GET IN TOUCH
-          </h1>
+          <h1 className="text-4xl font-bold md:text-6xl">GET IN TOUCH</h1>
         </div>
       </section>
 
-      {/* Contact Section */}
       <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
-            {/* Left Side: Contact Info */}
-            <div className="w-full rounded-lg bg-white p-8 shadow-lg lg:w-1/2">
-              <h2 className="mb-6 text-2xl font-bold text-gray-800">
-                Contact Information
-              </h2>
-              <ul className="space-y-4 text-gray-600">
+        <div className="container mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 md:grid-cols-2">
+          {/* Left Side: Contact Info */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <ul className="space-y-2 text-gray-700">
                 <li>801-200-5363 (Accepts Calls or Texts)</li>
                 <li>shonnieart@gmail.com</li>
-                <li className="flex items-center gap-2">
-                  Message me through
-                  <a
-                    href="https://www.facebook.com/Shonniestudioart"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800"
-                    aria-label="Facebook"
-                  >
-                    <Facebook />
-                  </a>
-                  or
-                  <a
-                    href="https://www.instagram.com/shonniesart"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-pink-600 hover:text-pink-800"
-                    aria-label="Instagram"
-                  >
-                    <Instagram />
-                  </a>
-                </li>
               </ul>
-              <div className="mt-8 flex justify-center gap-4">
-                <div className="relative h-40 w-40">
-                  <Image
-                    src="/assets/facebook-qr.png"
-                    alt="Facebook QR code"
-                    fill={true}
-                    className="object-contain"
-                  />
-                </div>
-                <div className="relative h-40 w-40">
-                  <Image
-                    src="/assets/ig-shonniesart-qr.png"
-                    alt="Instagram QR code"
-                    fill={true}
-                    className="object-contain"
-                  />
-                </div>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://www.facebook.com/Shonniestudioart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  <Facebook />
+                </a>
+                <a
+                  href="https://www.instagram.com/shonniesart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink-600 hover:text-pink-800"
+                >
+                  <Instagram />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/shonnie-schmidt-5a7752233/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  <Linkedin />
+                </a>
               </div>
-            </div>
+              <div className="flex justify-center gap-4 pt-4">
+                <Image
+                  src="/assets/facebook-qr.png"
+                  alt="Facebook QR code"
+                  width={150}
+                  height={150}
+                />
+                <Image
+                  src="/assets/ig-shonniesart-qr.png"
+                  alt="Instagram QR code"
+                  width={150}
+                  height={150}
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Right Side: Contact Form */}
-            <div className="w-full rounded-lg bg-white p-8 shadow-lg lg:w-1/2">
-              <h2 className="mb-6 text-2xl font-bold text-gray-800">
-                Email the Instructor
-              </h2>
-              {/* This form can be updated to use a Server Action for modern handling */}
-              <form className="space-y-6">
-                <div className="flex flex-col gap-6 md:flex-row">
-                  <div className="flex-1">
-                    <label htmlFor="name" className="sr-only">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
+          {/* Right Side: Contact Form */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Email the Instructor</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form id="contact-form" action={formAction} className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
                       id="name"
-                      placeholder="Name"
+                      name="name"
+                      placeholder="Your Name"
                       required
-                      className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-pink-500 focus:ring-pink-500"
                     />
                   </div>
-                  <div className="flex-1">
-                    <label htmlFor="email" className="sr-only">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
                       id="email"
-                      placeholder="Email"
+                      name="email"
+                      type="email"
+                      placeholder="your@email.com"
                       required
-                      className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-pink-500 focus:ring-pink-500"
                     />
                   </div>
                 </div>
-                <div>
-                  <label htmlFor="subject" className="sr-only">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    name="subject"
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
                     id="subject"
-                    placeholder="Subject"
+                    name="subject"
+                    placeholder="Question about classes"
                     required
-                    className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-pink-500 focus:ring-pink-500"
                   />
                 </div>
-                <div>
-                  <label htmlFor="message" className="sr-only">
-                    Message
-                  </label>
-                  <textarea
-                    name="message"
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
                     id="message"
-                    maxLength={500}
-                    placeholder="Message"
-                    rows={6}
+                    name="message"
+                    placeholder="Your message..."
                     required
-                    className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-pink-500 focus:ring-pink-500"
-                  ></textarea>
+                  />
                 </div>
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full rounded-lg bg-pink-600 px-6 py-3 font-bold text-white transition-colors hover:bg-pink-700 focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:outline-none"
-                  >
-                    Submit
-                  </button>
-                </div>
+                <SubmitButton />
               </form>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </>

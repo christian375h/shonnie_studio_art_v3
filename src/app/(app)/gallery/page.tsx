@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "src/components/ui/card";
 
-// Data for Shonnie's artworks
+// Data for image galleries
 const shonnieArtworks = [
   { src: "/assets/shonnie artwork/shonnie-1.jpg", alt: "Mother and Daughter" },
   { src: "/assets/shonnie artwork/shonnie-2.jpg", alt: "Monarch" },
@@ -12,7 +18,6 @@ const shonnieArtworks = [
   { src: "/assets/shonnie artwork/shonnie-8.jpg", alt: "Hands" },
 ];
 
-// Data for student artworks
 const studentArtworks = [
   { src: "/assets/studentsartwork/student-example-1.jpg", alt: "Wolf" },
   { src: "/assets/studentsartwork/student-example-2.jpg", alt: "Tree" },
@@ -26,65 +31,111 @@ const studentArtworks = [
   { src: "/assets/studentsartwork/student-example-27.JPEG", alt: "Pyramid" },
   { src: "/assets/studentsartwork/student-example-12.jpg", alt: "Forest 2" },
   { src: "/assets/studentsartwork/student-example-28.JPEG", alt: "Tunnel" },
+  { src: "/assets/studentsartwork/student-example-13.jpg", alt: "Triangles" },
+  { src: "/assets/studentsartwork/student-example-14.jpg", alt: "Apple" },
+  { src: "/assets/studentsartwork/student-example-15.jpg", alt: "Tortoise" },
+  { src: "/assets/studentsartwork/student-example-16.jpg", alt: "Cherries" },
+  {
+    src: "/assets/studentsartwork/student-example-18.jpg",
+    alt: "Vanishing Point",
+  },
+  { src: "/assets/studentsartwork/student-example-24.JPEG", alt: "Eye Study" },
+  { src: "/assets/studentsartwork/student-example-19.jpg", alt: "Flower" },
+  { src: "/assets/studentsartwork/student-example-20.jpg", alt: "Rose 2" },
+  { src: "/assets/studentsartwork/student-example-21.jpg", alt: "Feet" },
+  { src: "/assets/studentsartwork/student-example-22.jpg", alt: "Wolves" },
+  {
+    src: "/assets/studentsartwork/student-example-25.JPEG",
+    alt: "Mischevious",
+  },
+  {
+    src: "/assets/studentsartwork/student-example-26.JPEG",
+    alt: "Checkerboard",
+  },
+  {
+    src: "/assets/studentsartwork/student-example-29.JPEG",
+    alt: "Hands Study",
+  },
+  {
+    src: "/assets/studentsartwork/soccer-painting.JPG",
+    alt: "Tom Playing Soccer",
+  },
 ];
-
-// A reusable component to render an image gallery grid
-const ImageGrid = ({ images }: { images: { src: string; alt: string }[] }) => (
-  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-    {images.map((image, index) => (
-      <div
-        key={index}
-        className="group aspect-w-1 aspect-h-1 relative overflow-hidden rounded-lg shadow-lg"
-      >
-        <Image
-          src={image.src}
-          alt={image.alt}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
-        />
-      </div>
-    ))}
-  </div>
-);
 
 const GalleryPage = () => {
   return (
     <>
       <section className="border-b border-pink-100 bg-pink-50 py-16 text-center md:py-20">
         <div className="container mx-auto px-4">
-          <h1 className="font-merriweather text-4xl font-bold text-gray-800 md:text-6xl">
-            ART GALLERY
-          </h1>
+          <h1 className="text-4xl font-bold md:text-6xl">ART GALLERY</h1>
         </div>
       </section>
 
       <section className="py-16 md:py-24">
-        <div className="container mx-auto space-y-16 px-4">
-          <div>
-            <h2 className="font-merriweather mb-8 text-center text-3xl font-bold text-gray-800">
-              Shonnie's Artworks
-            </h2>
-            <ImageGrid images={shonnieArtworks} />
-            <p className="mt-8 text-center text-lg text-gray-600">
-              For more, visit{" "}
-              <a
-                href="https://www.shonnieart.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-pink-600 hover:underline"
-              >
-                my personal art page
-              </a>
-              .
-            </p>
-          </div>
+        <div className="container mx-auto space-y-12 px-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center text-3xl">
+                Shonnie's Artworks
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {shonnieArtworks.map((artwork) => (
+                  <div
+                    key={artwork.src}
+                    className="group overflow-hidden rounded-lg shadow-lg"
+                  >
+                    <Image
+                      src={artwork.src}
+                      alt={artwork.alt}
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                    />
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-center">
+                For more, visit{" "}
+                <a
+                  href="https://www.shonnieart.com"
+                  className="font-semibold text-pink-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  my art page
+                </a>
+                .
+              </p>
+            </CardContent>
+          </Card>
 
-          <div>
-            <h2 className="font-merriweather mb-8 text-center text-3xl font-bold text-gray-800">
-              Student Artworks
-            </h2>
-            <ImageGrid images={studentArtworks} />
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center text-3xl">
+                Student Artworks
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {studentArtworks.map((artwork) => (
+                  <div
+                    key={artwork.src}
+                    className="group overflow-hidden rounded-lg shadow-lg"
+                  >
+                    <Image
+                      src={artwork.src}
+                      alt={artwork.alt}
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                    />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </>
